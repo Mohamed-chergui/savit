@@ -14,7 +14,6 @@ class DataProvider with ChangeNotifier {
       _data = result['message'];
       notifyListeners();
     } catch (e) {
-      print('Error: $e');
     }
   }
 }
