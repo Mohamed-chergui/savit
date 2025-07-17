@@ -19,21 +19,19 @@ class _WordPageState extends State<WordPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final word = Provider.of<WordProvider>(context);
     return  Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: theme.scaffoldBackgroundColor,
        appBar: AppBar(
-      backgroundColor:  const Color.fromARGB(255, 250, 250, 250),
       title: const Text('Easy To confuse'  , 
       style: TextStyle(
                     fontFamily: "roboto" , 
                     fontSize: 20 , 
                     fontWeight: FontWeight.w700 , 
-                     
-                       color: Color.fromARGB(255, 59, 59, 59),
       ) ,),
       leading: IconButton(
-        icon: !word.isEditing ?   const Icon(Icons.arrow_back_ios_new_rounded , color: Color.fromARGB(255, 59, 59, 59) ,) :  const Icon(Icons.close , color: Color.fromARGB(255, 59, 59, 59), size: 28,) ,
+        icon: !word.isEditing ?   const Icon(Icons.arrow_back_ios_new_rounded ,) :  const Icon(Icons.close , color: Color.fromARGB(255, 59, 59, 59), size: 28,) ,
         onPressed: () {
           if (word.isEditing){
             word.toggleEditingMode() ; 

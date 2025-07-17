@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wordsapp/Providers/word_provider.dart';
-import 'package:wordsapp/screens/drop_down_for_settings.dart';
+import 'package:wordsapp/widgets/utils/editWordList/drop_down_for_settings.dart';
 import 'package:wordsapp/widgets/utils/editWordList/examples_settings.dart';
 import 'package:wordsapp/widgets/utils/editWordList/synonyms_settings.dart';
 import 'package:wordsapp/widgets/utils/editWordList/tags_settings.dart';

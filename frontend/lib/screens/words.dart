@@ -31,15 +31,14 @@ class _WordsState extends State<Words> {
   }
   @override
   Widget build(BuildContext context) {
-
-
+     final theme = Theme.of(context);
     final words  = Provider.of<WordsProvider>(context , listen : true ) ; 
     final collections = Provider.of<Collection>(context , listen : true ) ; 
     return  GestureDetector(
       onTap: () =>
         bodyClickHandle(collections, words) ,  
       child: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: theme.scaffoldBackgroundColor,
           appBar: AppBar(
       title: const Text('Easy To confuse'  , 
       style: TextStyle(

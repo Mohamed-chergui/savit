@@ -5,8 +5,9 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return  Scaffold(
-       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+       backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(child: 
       Padding(
         padding: const EdgeInsets.only(top : 12.0),

@@ -21,7 +21,6 @@ class _AppbarState extends State<Appbar> {
                 fontFamily: "roboto",
                           fontSize: 30 , 
                           fontWeight: FontWeight.w800 , 
-                          color: Color.fromARGB(255, 53, 53, 53), 
               ), ),
               Padding(
             padding: EdgeInsets.only(top : 8.0 , left: 8 ),
@@ -29,7 +28,6 @@ class _AppbarState extends State<Appbar> {
               fontFamily: "roboto",
                         fontSize: 20 , 
                         fontWeight: FontWeight.w800 , 
-                        color: Color.fromARGB(255, 53, 53, 53), 
             ), ),
           ) , 
             ],

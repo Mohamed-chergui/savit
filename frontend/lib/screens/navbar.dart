@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:wordsapp/Providers/collections.dart';
+import 'package:wordsapp/Providers/settings_provider.dart';
 
 
 class Navbar extends StatefulWidget {
@@ -50,6 +51,7 @@ class _NavbarState extends State<Navbar> {
   @override
   Widget build(BuildContext context) {
       final collections = Provider.of<Collection>(context);
+      final settingsProvider = Provider.of<SettingsProvider>(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -147,7 +149,7 @@ offset: collections.isholdFolderMode || collections.isAddFolder? const Offset(0,
             height: 65,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: const Color.fromARGB(255, 129, 154, 145),
+              color: settingsProvider.mainColorOptions[settingsProvider.mainColorindex],
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.4),

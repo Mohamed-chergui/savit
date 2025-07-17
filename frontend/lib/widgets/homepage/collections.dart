@@ -28,7 +28,6 @@ Widget build(BuildContext context) {
           fontFamily: "roboto",
           fontSize: 21,
           fontWeight: FontWeight.w800,
-          color: Color.fromARGB(255, 53, 53, 53),
         ),
       ),
       const SizedBox(height: 14),

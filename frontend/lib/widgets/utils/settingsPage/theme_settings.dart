@@ -3,16 +3,18 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wordsapp/Providers/collections.dart';
+import 'package:wordsapp/Providers/settings_provider.dart';
 
 class ThemeSettings extends StatelessWidget {
   const ThemeSettings({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context) ; 
+    final settingsProvider = Provider.of<SettingsProvider>(context) ;  
     return Container(
       decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 245, 245 , 245),
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(14)),
       child:   Padding(
         padding: const EdgeInsets.only(top : 12.0 , left : 12 , bottom: 20 ),
@@ -20,16 +22,15 @@ class ThemeSettings extends StatelessWidget {
           padding: const EdgeInsets.only(top : 8.0 , left: 4 , right: 12 ),
           child: Column(
             children: [
-              const Row( children: [
-                Text("Theme" , 
+               const Row( children: [
+                Text("Appearance" , 
                 style: TextStyle( fontFamily: "roboto" , 
-                fontSize: 16 , 
+                fontSize: 17 , 
                 fontWeight: FontWeight.w700 , 
-                color: Color.fromARGB(255, 59, 59, 59),
                                   ) ,), 
               ],) , 
               Padding(
-                padding: const EdgeInsets.only(top : 8.0),
+                padding: const EdgeInsets.only(top : 14.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -41,22 +42,63 @@ class ThemeSettings extends StatelessWidget {
                           scale: 0.8,
                           child: CupertinoSwitch(
                             activeColor: const Color.fromARGB(255, 129, 154, 145),
-                            value: true    , 
+                            value: settingsProvider.isDarkMode    , 
                             onChanged: (value) {
+                               settingsProvider.setIsDarkMode(value) ; 
                             },
                           ),
                         )   : Transform.scale(
                           scale: 0.8,
                           child: Switch(
-                            value: true ,
+                            value: settingsProvider.isDarkMode ,
                             onChanged: (value) {
-                             
+                              settingsProvider.setIsDarkMode(value) ;
                             },
                           ),
                         ) ,
                   ],
                 ),
               ) , 
+                            Padding(
+                padding: const EdgeInsets.only(top : 2.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text("Perfect reversing", style: TextStyle(
+                      fontFamily: "roboto" , 
+                      fontSize: 15, 
+                    ),), 
+                    Platform.isIOS ? Transform.scale(
+                          scale: 0.8,
+                          child: CupertinoSwitch(
+                            activeColor: const Color.fromARGB(255, 129, 154, 145),
+                            value:    settingsProvider.isReversed  , 
+                            onChanged: (value) {
+                              settingsProvider.setIsReversed(value) ; 
+                            },
+                          ),
+                        )   : Transform.scale(
+                          scale: 0.8,
+                          child: Switch(
+                            value: settingsProvider.isReversed  ,
+                            onChanged: (value) {
+                               settingsProvider.setIsReversed(value) ; 
+                            },
+                          ),
+                        ) ,
+                  ],
+                ),
+              ) , 
+               Padding(
+                 padding: const EdgeInsets.only(top : 24.0 , bottom: 18 , left: 6, right: 6),
+                 child: Container(
+                  width: double.infinity,
+                  height: 0.4,
+                  decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 37, 37, 37)
+                  ),
+                               ),
+               ) ,
                Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -68,25 +110,27 @@ class ThemeSettings extends StatelessWidget {
                         ),) , 
                   
                   ],),
-                  SizedBox(
-      height: 60,
-      child: ListView.builder(
-        itemCount: 4 ,
-        itemBuilder: (context, index) {
-           return Row(
-          children: [
-           GestureDetector
-           (
-            onTap: () {
-            },
-            
-            child: ColorCard(cardColor: Colors.greenAccent, index: index,))
-        ],) ; 
-        },
-        scrollDirection: Axis.horizontal,
-      ),
-    ) ,
-
+                    Padding(
+                      padding: const EdgeInsets.only(top : 8.0),
+                      child: SizedBox(
+                        child: Wrap(
+                          direction: Axis.horizontal,
+                          spacing: 1, 
+                          runSpacing: 4,
+                          children: List.generate(settingsProvider.mainColorOptions.length, (index) {
+                            return GestureDetector(
+                              onTap: () {
+                                settingsProvider.setMainColorIndex(index);
+                              },
+                              child: ColorCard(
+                                cardColor: settingsProvider.mainColorOptions[index] ,
+                                index: index,
+                              ),
+                            );
+                          }),
+                        ),
+                      ),
+                    )
 
                 ],
               )
@@ -105,8 +149,8 @@ class ColorCard extends StatelessWidget {
   const ColorCard({super.key , required this.cardColor  ,  required this.index});
 
   @override
-  Widget build(BuildContext context) {
-    final collections = Provider.of<Collection>(context , listen : false ) ; 
+  Widget build(BuildContext context) { 
+    final settingsProvider = Provider.of<SettingsProvider>(context) ;
     return Padding(
       padding: const EdgeInsets.only(left : 2.0),
       child: Container(
@@ -115,9 +159,9 @@ class ColorCard extends StatelessWidget {
           color: cardColor , 
           border: Border.all(color: const Color.fromARGB(255, 190, 190, 190) , width: 0.5)
         ),
-        height: collections.colorPickedIndex == index ?  50 : 33,
-        width:collections.colorPickedIndex == index ?  50 : 43 ,
-        child: AnimatedOpacity  (opacity: collections.colorPickedIndex == index ? 1 : 0  , duration: const Duration(milliseconds: 200),
+        height: settingsProvider.mainColorindex == index ?  44 : 38,
+        width:settingsProvider.mainColorindex == index ?  44 : 38 ,
+        child: AnimatedOpacity  (opacity:  settingsProvider.mainColorindex ==  index ? 1 : 0  , duration: const Duration(milliseconds: 200),
          child: 
          Padding(
            padding: const EdgeInsets.only(right : 10.0 ,bottom: 6 ),
@@ -132,9 +176,9 @@ class ColorCard extends StatelessWidget {
                   border: Border.all( color: const Color.fromARGB(255, 53, 53, 53))),
                   height: 20,
                   width: 20 ,  
-                  child: const Center(child: Padding(
-                    padding: EdgeInsets.all(.0),
-                    child: Center(child: Icon(Icons.check , color: Color.fromARGB(255, 53, 53, 53), size: 16,) ),
+                  child:  Center(child: Padding(
+                    padding: const EdgeInsets.all(0.0),
+                    child: Center(child: Icon(Icons.check , color: settingsProvider.textColor()  , size: 16,) ),
                   )),
                )
              ],

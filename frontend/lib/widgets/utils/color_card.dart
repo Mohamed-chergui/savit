@@ -31,7 +31,7 @@ class ColorCard extends StatelessWidget {
                  decoration :
                  BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all( color: const Color.fromARGB(255, 53, 53, 53))),
+                  border: Border.all( color:  const Color.fromARGB(255, 53, 53, 53))),
                   height: 20,
                   width: 20 ,  
                   child: const Center(child: Padding(
